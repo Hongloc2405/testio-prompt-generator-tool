@@ -1,0 +1,176 @@
+<!doctype html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Công cụ ghép prompt cho quy trình Test IO QA.">
+  <title>Test IO Prompt Desk</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&amp;family=IBM+Plex+Mono:wght@400;500&amp;display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header class="topbar">
+    <div>
+      <p class="eyebrow">QA WORKSPACE</p>
+      <h1>Test IO Prompt Desk</h1>
+    </div>
+    <div class="load-status" id="loadStatus" role="status">
+      <span class="status-dot" aria-hidden="true"></span>
+      Đang tải prompt gốc
+    </div>
+  </header>
+
+  <main>
+    <section class="workspace-section intro-section" aria-labelledby="shared-data-title">
+      <div class="section-heading">
+        <p class="step-number">00</p>
+        <div>
+          <h2 id="shared-data-title">Dữ liệu dùng chung</h2>
+          <p>Test Cycle và Issue được tái sử dụng tự động ở các workflow liên quan.</p>
+        </div>
+      </div>
+
+      <div class="shared-inputs">
+        <label class="field-block" for="testCycleInput">
+          <span class="field-label">Test Cycle Description <b>Bắt buộc</b></span>
+          <textarea id="testCycleInput" rows="12" placeholder="Dán toàn bộ Test Cycle: scope, features, restrictions, known issues, environment..."></textarea>
+          <span class="field-meta"><span id="testCycleCount">0 ký tự</span><button class="text-button" type="button" data-clear="testCycleInput">Xóa</button></span>
+        </label>
+
+        <label class="field-block" for="issueInput">
+          <span class="field-label">Issue Description <b>Dùng cho workflow 02–03</b></span>
+          <textarea id="issueInput" rows="12" placeholder="Mô tả issue, steps, actual result, expected result, URL, environment và attachment nếu có..."></textarea>
+          <span class="field-meta"><span id="issueCount">0 ký tự</span><button class="text-button" type="button" data-clear="issueInput">Xóa</button></span>
+        </label>
+      </div>
+    </section>
+
+    <section class="workflow-section" data-workflow="cycle" aria-labelledby="cycle-title">
+      <div class="workflow-content">
+        <div class="workflow-info">
+          <p class="step-number">01</p>
+          <h2 id="cycle-title">Phân tích Test Cycle</h2>
+          <p>Chuyển Test Cycle thành test plan tiếng Việt, có scope, flow, checklist và restrictions.</p>
+          <div class="requirements"><span>Yêu cầu</span><strong>Test Cycle</strong></div>
+          <button class="generate-button" type="button" data-generate="cycle">
+            <i data-lucide="wand-sparkles" aria-hidden="true"></i>
+            Generate prompt
+          </button>
+        </div>
+        <div class="output-panel">
+          <div class="output-toolbar">
+            <span>Prompt output</span>
+            <button class="copy-button" type="button" data-copy="cycle" disabled>
+              <i data-lucide="copy" aria-hidden="true"></i>
+              <span>Copy prompt</span>
+            </button>
+          </div>
+          <pre id="cycleOutput" class="prompt-output" tabindex="0">Nhập Test Cycle rồi chọn Generate prompt.</pre>
+          <p id="cycleMessage" class="output-message" aria-live="polite"></p>
+        </div>
+      </div>
+    </section>
+
+    <section class="workflow-section" data-workflow="investigate" aria-labelledby="investigate-title">
+      <div class="workflow-content">
+        <div class="workflow-info">
+          <p class="step-number">02</p>
+          <h2 id="investigate-title">Đánh giá issue</h2>
+          <p>Xác định issue có phải bug, có in scope và có nên submit hay không.</p>
+          <div class="requirements"><span>Yêu cầu</span><strong>Test Cycle + Issue</strong></div>
+          <button class="generate-button" type="button" data-generate="investigate">
+            <i data-lucide="scan-search" aria-hidden="true"></i>
+            Generate prompt
+          </button>
+        </div>
+        <div class="output-panel">
+          <div class="output-toolbar">
+            <span>Prompt output</span>
+            <button class="copy-button" type="button" data-copy="investigate" disabled>
+              <i data-lucide="copy" aria-hidden="true"></i>
+              <span>Copy prompt</span>
+            </button>
+          </div>
+          <pre id="investigateOutput" class="prompt-output" tabindex="0">Nhập Test Cycle và Issue rồi chọn Generate prompt.</pre>
+          <p id="investigateMessage" class="output-message" aria-live="polite"></p>
+        </div>
+      </div>
+    </section>
+
+    <section class="workflow-section" data-workflow="report" aria-labelledby="report-title">
+      <div class="workflow-content">
+        <div class="workflow-info">
+          <p class="step-number">03</p>
+          <h2 id="report-title">Tạo Bug Report</h2>
+          <p>Ghép dữ liệu thành prompt tạo Bug Report tiếng Anh theo chuẩn Test IO.</p>
+          <div class="requirements"><span>Yêu cầu</span><strong>Test Cycle + Issue</strong></div>
+          <button class="generate-button" type="button" data-generate="report">
+            <i data-lucide="file-pen-line" aria-hidden="true"></i>
+            Generate prompt
+          </button>
+        </div>
+        <div class="output-panel">
+          <div class="output-toolbar">
+            <span>Prompt output</span>
+            <button class="copy-button" type="button" data-copy="report" disabled>
+              <i data-lucide="copy" aria-hidden="true"></i>
+              <span>Copy prompt</span>
+            </button>
+          </div>
+          <pre id="reportOutput" class="prompt-output" tabindex="0">Nhập Test Cycle và Issue rồi chọn Generate prompt.</pre>
+          <p id="reportMessage" class="output-message" aria-live="polite"></p>
+        </div>
+      </div>
+    </section>
+
+    <section class="workspace-section duplicate-inputs" aria-labelledby="duplicate-data-title">
+      <div class="section-heading">
+        <p class="step-number">04</p>
+        <div>
+          <h2 id="duplicate-data-title">Kiểm tra duplicate</h2>
+          <p>Bổ sung Bug Report mới và danh sách bug đã mở trước khi tạo prompt.</p>
+        </div>
+      </div>
+      <div class="shared-inputs">
+        <label class="field-block" for="bugReportInput">
+          <span class="field-label">New Bug Report <b>Bắt buộc</b></span>
+          <textarea id="bugReportInput" rows="12" placeholder="Dán bug report mới: Title, Feature, Steps, Actual Result, Expected Result, URL, Environment, Severity..."></textarea>
+          <span class="field-meta"><span id="bugReportCount">0 ký tự</span><button class="text-button" type="button" data-clear="bugReportInput">Xóa</button></span>
+        </label>
+        <label class="field-block" for="knownBugsInput">
+          <span class="field-label">Previous / Known Bugs <b>Bắt buộc</b></span>
+          <textarea id="knownBugsInput" rows="12" placeholder="Dán danh sách đầy đủ các bug đã submit, gồm Bug ID, title và toàn bộ thông tin có sẵn..."></textarea>
+          <span class="field-meta"><span id="knownBugsCount">0 ký tự</span><button class="text-button" type="button" data-clear="knownBugsInput">Xóa</button></span>
+        </label>
+      </div>
+      <div class="duplicate-action">
+        <div class="requirements"><span>Yêu cầu</span><strong>Test Cycle + New Bug Report + Previous Bugs</strong></div>
+        <button class="generate-button" type="button" data-generate="duplicate">
+          <i data-lucide="git-compare-arrows" aria-hidden="true"></i>
+          Generate prompt
+        </button>
+      </div>
+      <div class="output-panel duplicate-output">
+        <div class="output-toolbar">
+          <span>Prompt output</span>
+          <button class="copy-button" type="button" data-copy="duplicate" disabled>
+            <i data-lucide="copy" aria-hidden="true"></i>
+            <span>Copy prompt</span>
+          </button>
+        </div>
+        <pre id="duplicateOutput" class="prompt-output" tabindex="0">Nhập đủ Test Cycle, New Bug Report và Previous Bugs rồi chọn Generate prompt.</pre>
+        <p id="duplicateMessage" class="output-message" aria-live="polite"></p>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <span>Prompt Generator Tool - Made by <code>Loc La</code></span>
+  </footer>
+
+  <script src="https://unpkg.com/lucide@0.468.0/dist/umd/lucide.min.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>
